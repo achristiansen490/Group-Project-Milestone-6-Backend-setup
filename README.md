@@ -1,73 +1,96 @@
-# Welcome to your Lovable project
+# Outside Today
 
-## Project info
+## App Summary
+Outside Today helps families encourage kids to spend more time outdoors through structured, fun activities. The app addresses a common issue where children default to screen-based entertainment and need guidance toward active play. The primary user is a child, supported by a parent who sets goals and rewards. Kids can browse outdoor activities, complete challenges, and earn points over time. Parents can use points and goals to reinforce healthy habits and celebrate progress. This repository now includes a backend and database foundation so progress can persist instead of resetting on refresh. The first vertical slice connects one real button to database updates and UI feedback.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Tech Stack
+- Frontend: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Framer Motion
+- Backend: Node.js, Express
+- Database: PostgreSQL
+- Database Access: `pg` (node-postgres)
+- Authentication: Not implemented yet (planned for future milestones)
+- Tooling: ESLint, Vitest, Nodemon
+- External services/APIs: None currently
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## Architecture Diagram
+```mermaid
+flowchart LR
+  U[User: Child/Parent] -->|HTTP| F[Frontend: React + Vite]
+  F -->|/api requests| B[Backend: Express API]
+  B -->|SQL via pg| D[(PostgreSQL)]
 ```
 
-**Edit a file directly in GitHub**
+## Prerequisites
+Install the following software before running locally:
+- Node.js 18+ and npm: https://nodejs.org/en/download
+- PostgreSQL 14+ and `psql`: https://www.postgresql.org/download/
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Verify installations:
+```bash
+node -v
+npm -v
+psql --version
+```
 
-**Use GitHub Codespaces**
+## Installation and Setup
+1. Install dependencies:
+```bash
+npm install
+```
+2. Create environment file:
+```bash
+cp .env.example .env
+```
+3. Create the PostgreSQL database:
+```bash
+createdb outside_today
+```
+4. Run schema and seed scripts:
+```bash
+psql -d outside_today -f db/schema.sql
+psql -d outside_today -f db/seed.sql
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Running the Application
+Start backend in terminal 1:
+```bash
+npm run dev:server
+```
+Start frontend in terminal 2:
+```bash
+npm run dev
+```
+Open the app at:
+- Frontend URL: `http://localhost:8080`
+- Backend health check: `http://localhost:3001/api/health`
 
-## What technologies are used for this project?
+## Verifying the Vertical Slice
+This milestone wires the existing `Start Activity ⭐` button on the Activities page to the backend and database.
 
-This project is built with:
+1. Open `http://localhost:8080/activities`.
+2. Click any activity card to open the detail panel.
+3. Click `Start Activity ⭐`.
+4. Confirm the UI updates with a success message and a new `DB Points` value.
+5. Refresh the page and confirm `DB Points` still shows the updated total from PostgreSQL.
+6. Confirm rows were written in PostgreSQL:
+```bash
+psql -d outside_today -c "SELECT completion_id, child_id, points_earned, completed_at FROM completed_activities ORDER BY completion_id DESC LIMIT 5;"
+psql -d outside_today -c "SELECT child_id, total_points FROM children WHERE child_id = 1;"
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Database Scripts
+- Schema: `db/schema.sql`
+- Seed data: `db/seed.sql`
 
-## How can I deploy this project?
+The schema includes at least 5 tables and currently defines:
+- `users`
+- `children`
+- `activities`
+- `goals`
+- `completed_activities`
+- `rewards`
+- `activity_suggestions`
+- `screen_time`
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Team Repository Note
+Share this repository with all team members and invite GitHub user `taforlauracutler` as required by the assignment.
