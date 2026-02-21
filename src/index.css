@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Outside Today - Fresh, outdoorsy, playful palette */
+    --background: 80 40% 98%;
+    --foreground: 160 30% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 30% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 30% 15%;
+
+    /* Nature green primary */
+    --primary: 152 55% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Soft sky blue secondary */
+    --secondary: 200 70% 92%;
+    --secondary-foreground: 200 60% 30%;
+
+    /* Light sage muted */
+    --muted: 100 25% 93%;
+    --muted-foreground: 160 15% 45%;
+
+    /* Sunny yellow accent */
+    --accent: 42 95% 65%;
+    --accent-foreground: 35 60% 20%;
+
+    /* Coral destructive */
+    --destructive: 0 72% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 100 20% 88%;
+    --input: 100 20% 88%;
+    --ring: 152 55% 42%;
+
+    --radius: 1rem;
+
+    /* Custom tokens */
+    --coral: 12 85% 65%;
+    --coral-foreground: 0 0% 100%;
+    --sky: 200 80% 60%;
+    --sky-foreground: 0 0% 100%;
+    --sunshine: 42 95% 65%;
+    --sunshine-foreground: 35 60% 20%;
+    --nature: 152 55% 42%;
+    --nature-light: 140 40% 90%;
+    --lavender: 270 50% 80%;
+    --lavender-foreground: 270 40% 25%;
+
+    --shadow-soft: 0 4px 20px -4px hsl(160 30% 15% / 0.08);
+    --shadow-card: 0 2px 12px -2px hsl(160 30% 15% / 0.06);
+    --shadow-playful: 0 8px 30px -6px hsl(152 55% 42% / 0.15);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 152 55% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 100 25% 93%;
+    --sidebar-accent-foreground: 160 30% 15%;
+    --sidebar-border: 100 20% 88%;
+    --sidebar-ring: 152 55% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-gradient-nature {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(152 55% 42%), hsl(200 80% 60%));
+  }
+
+  .text-gradient-fun {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(12 85% 65%), hsl(42 95% 65%));
+  }
+
+  .bg-gradient-sky {
+    background: linear-gradient(180deg, hsl(200 80% 95%) 0%, hsl(80 40% 98%) 100%);
+  }
+
+  .bg-gradient-nature {
+    background: linear-gradient(135deg, hsl(152 55% 42%) 0%, hsl(160 50% 50%) 100%);
+  }
+
+  .bg-gradient-sunshine {
+    background: linear-gradient(135deg, hsl(42 95% 65%) 0%, hsl(35 90% 60%) 100%);
+  }
+
+  .bg-gradient-coral {
+    background: linear-gradient(135deg, hsl(12 85% 65%) 0%, hsl(0 72% 60%) 100%);
+  }
+
+  .bg-gradient-hero {
+    background: linear-gradient(180deg, hsl(200 80% 94%) 0%, hsl(140 40% 95%) 40%, hsl(80 40% 98%) 100%);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-playful {
+    box-shadow: var(--shadow-playful);
+  }
+}

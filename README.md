@@ -1,18 +1,73 @@
-# Group-Project-Milestone-6-Backend-setup
-IS 401-03 Group 10
+# Welcome to your Lovable project
 
-Your GitHub repository should include a README with the following sections.  
+## Project info
 
-App Summary. Provide a brief (5–8 sentence) overview explaining the problem your application solves, who the primary user is, and what your product does.
+**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
-Tech Stack. List the technologies used in each layer of your system, including frontend framework and tooling, backend framework, database, authentication (if applicable), and any external services or APIs.
+## How can I edit this code?
 
-Architecture Diagram. Include a system architecture diagram showing the user, frontend, backend, database, and any external services, with labeled arrows indicating how the components communicate.
+There are several ways of editing your application.
 
-Prerequisites. List all required software needed to run the project locally (e.g., Node.js, PostgreSQL, and psql available in the system PATH). Provide links to official installation instructions and include commands to verify installation.
+**Use Lovable**
 
-Installation and Setup. Provide clear step-by-step instructions for installing dependencies, creating the database, running schema.sql and seed.sql, and configuring environment variables if required.
+Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
 
-Running the Application. Explain how to start the backend and frontend and specify the URL to open in the browser.
+Changes made via Lovable will be committed automatically to this repo.
 
-Verifying the Vertical Slice. Provide specific steps demonstrating how to trigger the feature, confirm that the database was updated, and verify that the change persists after refreshing the page.
+**Use your preferred IDE**
+
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
+```
+
+**Edit a file directly in GitHub**
+
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
+
+**Use GitHub Codespaces**
+
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
+
+## What technologies are used for this project?
+
+This project is built with:
+
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+
+## How can I deploy this project?
+
+Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+
+## Can I connect a custom domain to my Lovable project?
+
+Yes, you can!
+
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
