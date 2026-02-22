@@ -69,10 +69,11 @@ This milestone wires the existing `Start Activity ⭐` button on the Activities 
 
 1. Open `http://localhost:8080/activities`.
 2. Click any activity card to open the detail panel.
-3. Click `Start Activity ⭐`.
-4. Confirm the UI updates with a success message and a new `DB Points` value.
-5. Refresh the page and confirm `DB Points` still shows the updated total from PostgreSQL.
-6. Confirm rows were written in PostgreSQL:
+3. Click `Start Activity ⭐` and confirm the popup says: `Activity begun! Return here once complete to claim your points!`.
+4. Click `Verify Completion`.
+5. Confirm the UI updates with a success message and a new `Activity Points` value.
+6. Refresh the page and confirm `Activity Points` still shows the updated total from PostgreSQL.
+7. Confirm rows were written in PostgreSQL:
 ```bash
 psql -d outside_today -c "SELECT completion_id, child_id, points_earned, completed_at FROM completed_activities ORDER BY completion_id DESC LIMIT 5;"
 psql -d outside_today -c "SELECT child_id, total_points FROM children WHERE child_id = 1;"

@@ -3,6 +3,14 @@ import { motion } from "framer-motion";
 import { Clock, Star, ChevronRight } from "lucide-react";
 import AppNav from "@/components/AppNav";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 type Activity = {
   id: number;
@@ -96,7 +104,7 @@ const toActivity = (activity: ApiActivity, index: number): Activity => ({
     "Read the activity details together",
     "Head outside and complete the challenge",
     "Track your time and effort",
-    "Press Start Activity to save it",
+    "Press Start Activity to begin, then verify to claim points",
   ],
   durationMinutes: activity.duration_minutes,
 });
@@ -107,6 +115,7 @@ const ActivitiesPage = () => {
   const [selectedActivity, setSelectedActivity] = useState<number | null>(null);
   const [childPoints, setChildPoints] = useState<number | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isVerifyOpen, setIsVerifyOpen] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -149,7 +158,7 @@ const ActivitiesPage = () => {
 
   const selected = activities.find((activity) => activity.id === selectedActivity);
 
-  const handleStartActivity = async () => {
+  const handleVerifyCompletion = async () => {
     if (!selected) {
       return;
     }
@@ -178,8 +187,9 @@ const ActivitiesPage = () => {
       const payload = await response.json();
       setChildPoints(payload.child.total_points);
       setStatusMessage(
-        `Saved "${selected.name}". Total points in database: ${payload.child.total_points}.`
+        `Saved "${selected.name}". Total Activity Points: ${payload.child.total_points}.`
       );
+      setIsVerifyOpen(false);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to save completion";
       setStatusMessage(message);
@@ -203,7 +213,7 @@ const ActivitiesPage = () => {
             <p className="text-muted-foreground mt-1">Fun things to do outside today!</p>
           </div>
           <div className="px-4 py-2 rounded-full bg-card shadow-card text-sm font-semibold">
-            DB Points: {childPoints ?? "--"}
+            Activity Points: {childPoints ?? "--"}
           </div>
         </motion.div>
 
@@ -277,10 +287,12 @@ const ActivitiesPage = () => {
             <div className="mt-5">
               <Button
                 className="rounded-full font-bold w-full"
-                onClick={handleStartActivity}
-                disabled={isSaving}
+                onClick={() => {
+                  setStatusMessage(null);
+                  setIsVerifyOpen(true);
+                }}
               >
-                {isSaving ? "Saving..." : "Start Activity ⭐"}
+                Start Activity ⭐
               </Button>
             </div>
           </motion.div>
@@ -321,6 +333,22 @@ const ActivitiesPage = () => {
           ))}
         </div>
       </main>
+
+      <Dialog open={isVerifyOpen} onOpenChange={setIsVerifyOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Activity begun!</DialogTitle>
+            <DialogDescription>
+              Return here once complete to claim your points!
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={handleVerifyCompletion} disabled={isSaving}>
+              {isSaving ? "Verifying..." : "Verify Completion"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

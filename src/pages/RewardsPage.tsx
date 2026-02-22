@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Star, Gift, Lock } from "lucide-react";
 import AppNav from "@/components/AppNav";
@@ -18,6 +19,34 @@ const availableRewards = [
 ];
 
 const RewardsPage = () => {
+  const [activityPoints, setActivityPoints] = useState(320);
+
+  useEffect(() => {
+    const loadPoints = async () => {
+      try {
+        const response = await fetch("/api/children/1/points");
+        if (!response.ok) {
+          return;
+        }
+
+        const data = await response.json();
+        setActivityPoints(data.total_points);
+      } catch {
+        // Keep fallback points if backend is unavailable.
+      }
+    };
+
+    void loadPoints();
+  }, []);
+
+  const rewardsWithLiveProgress = useMemo(
+    () =>
+      availableRewards.map((reward) =>
+        reward.name === "Ice Cream Trip" ? { ...reward, progress: activityPoints } : reward
+      ),
+    [activityPoints]
+  );
+
   return (
     <div className="min-h-screen bg-gradient-hero pb-20 md:pb-8">
       <AppNav />
@@ -45,8 +74,8 @@ const RewardsPage = () => {
           {/* Points summary */}
           <div className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-card rounded-full shadow-card">
             <Star size={22} className="text-sunshine" />
-            <span className="text-2xl font-display font-bold">320</span>
-            <span className="text-muted-foreground font-semibold">points</span>
+            <span className="text-2xl font-display font-bold">{activityPoints}</span>
+            <span className="text-muted-foreground font-semibold">Activity Points</span>
           </div>
         </motion.div>
 
@@ -93,7 +122,7 @@ const RewardsPage = () => {
             <Lock size={20} className="text-muted-foreground" /> Keep Going!
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {availableRewards.map((r, i) => {
+            {rewardsWithLiveProgress.map((r, i) => {
               const pct = Math.round((r.progress / r.total) * 100);
               return (
                 <motion.div
